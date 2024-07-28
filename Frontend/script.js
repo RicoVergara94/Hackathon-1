@@ -9,11 +9,11 @@ const rideButton = document.querySelector('.add-ride-btn');
 const addRideForm = document.getElementById('add-ride-form');
 const returnButton = document.querySelector('.form-return-btn');
 const submitRideButton = document.querySelector('.add-form-btn');
-var startPoint = document.getElementById('startPoint');
-var endPoint = document.getElementById('endPoint');
-var miles = document.getElementById('miles');
-var seats = document.getElementById('seats');
-var amount = document.getElementById('amount');
+var startPoint = document.getElementById('startingPoint');
+var endPoint = document.getElementById('destination');
+var time = document.getElementById('departureTime');
+var seats = document.getElementById('availableSeats');
+var amount = document.getElementById('payment');
 
 class App {
   #map;
@@ -51,14 +51,14 @@ class App {
       e.preventDefault();
       var startPointValue = startPoint.value;
       var endPointValue = endPoint.value;
-      var milesValue = miles.value;
+      var timeValue = time.value;
       var seatsValue = seats.value;
       var amountValue = amount.value;
 
       this._renderRide(
         startPointValue,
         endPointValue,
-        milesValue,
+        timeValue,
         seatsValue,
         amountValue
       );
@@ -182,32 +182,26 @@ class App {
   _renderRide(
     startPointValue,
     endPointValue,
-    milesValue,
+    timeValue,
     seatsValue,
     amountValue
   ) {
     let html = `
-<li class="workout workout--running" data-id="1234567890">
-  <div class="main">
+<li class="ride-info workout--running" data-id="1234567890">
+  <div class="ride__main_info">
     <img src="images/laura-jones.jpg" class="user-profile-pic" />
     <h2 class="workout__title1">${startPointValue}</h2>
+    <img src="images/road.svg" class="road-svg" />
     <h2 class="workout__title2">${endPointValue}</h2>
   </div>
-  <div class="workout__details">
-    <span class="workout__value">${milesValue}</span>
-    <span class="workout__unit">Miles</span>
+  <div class="ride_details ride-2-info">
+    <span class="workout__value">${timeValue}</span>
+    <button class="phone-btn"><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="call-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg></span></button>
   </div>
-  <div class="workout__details">
-    <span class="workout__icon">&</span>
+  <div class="ride_details">
     <span class="workout__value">${seatsValue}</span>
-    <span class="workout__unit">seats</span>
   </div>
-  <div class="workout__details">
-    <span class="workout__icon">⚡️</span>
-    <span class="workout__value">60</span>
-    <span class="workout__unit">mph</span>
-  </div>
-  <div class="workout__details">
+  <div class="ride_details">
     <span class="workout__icon">$</span>
     <span class="workout__value">${amountValue}</span>
   </div>
