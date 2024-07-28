@@ -4,11 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="shortcut icon"
-      type="images/png"
-      href="images/"
-    />
+    <link rel="shortcut icon" type="images/png" href="images/" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
@@ -136,5 +132,64 @@
       />
       <button class="add-form-btn">ADD</button>
     </form>
+
+    <script>
+      document
+        .getElementById('rideForm')
+        .addEventListener('submit', async function (event) {
+          event.preventDefault();
+
+          const ride = {
+            startLocation: {
+              coordinates: [
+                parseFloat(document.getElementById('startLat').value),
+                parseFloat(document.getElementById('startLon').value),
+              ],
+            },
+            endLocation: {
+              coordinates: [
+                parseFloat(document.getElementById('endLat').value),
+                parseFloat(document.getElementById('endLon').value),
+              ],
+            },
+            totalMiles: parseFloat(document.getElementById('totalMiles').value),
+            seatsAvailable: parseInt(
+              document.getElementById('seatsAvailable').value,
+              10
+            ),
+            payment: parseFloat(document.getElementById('payment').value),
+            riderId: document.getElementById('riderId').value,
+          };
+
+          const options = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(ride),
+          };
+
+          fetch('http://localhost:3000/api/rides/create', options)
+            .then(response => {
+              if (!response.ok) {
+                return response.text().then(text => {
+                  throw new Error(
+                    `Network response was not ok: ${response.status} - ${text}`
+                  );
+                });
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log('Response:', data);
+            })
+            .catch(error => {
+              console.error(
+                'There was a problem with the fetch operation:',
+                error.message
+              );
+            });
+        });
+    </script>
   </body>
 </html>

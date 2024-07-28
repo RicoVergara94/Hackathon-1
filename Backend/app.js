@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
+const rideRoutes = require('./routes/rideRoutes');
 const app = express();
 const cors = require('cors');
 const port = process.env.PORT || 3000;
@@ -35,10 +36,29 @@ db.once('open', () => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth/', authRoutes);
+app.use('/api/rides', rideRoutes);
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('This Hackathon sucks');
+  res.send('This Hackathon rocks');
+});
+
+app.get('/api/rides', async (req, res) => {
+  const { latitude, longitude, radius } = req.query;
+
+  try {
+    const rides = await Ride.find({
+      startLocation: {
+        $geoWithin: {
+          $centerSphere: [[longitude, latitude], radius / 3963.2], // radius in miles, convert to radians
+        },
+      },
+    }).populate('rider', 'username email name'); // populate rider's profile details
+
+    res.json(rides);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 // const createUser = async (username, password) => {
