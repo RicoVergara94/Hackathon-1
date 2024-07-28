@@ -27,7 +27,7 @@ class App {
     this.#map = null; // Initialize the map variable
 
     searchForm.addEventListener('submit', e => {
-      // e.preventDefault(); // Prevent the form from submitting normally
+      e.preventDefault(); // Prevent the form from submitting normally
       const query = searchBar.value; // Get the value from the search bar
       console.log('Search query:', query);
       this._geocodeCity(query); // Arrow function preserves the context of `this`
