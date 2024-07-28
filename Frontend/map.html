@@ -4,14 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" type="image/png" href="images/icon.png" />
+    <link
+      rel="shortcut icon"
+      type="images/png"
+      href="images/"
+    />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="map.css" />
+    <link rel="stylesheet" href="style.css" />
 
     <link
       rel="stylesheet"
@@ -25,8 +29,10 @@
       integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
       crossorigin=""
     ></script>
-    <script defer src="map.js"></script>
-    <title>Map Application</title>
+
+    <!-- <script defer src="other.js"></script> -->
+    <script defer src="script.js"></script>
+    <title>mapty // Map your workouts</title>
   </head>
   <body>
     <div class="section">
@@ -36,33 +42,7 @@
           alt="Logo"
           class="logo"
         />
-        <ul class="workouts">
-          <li class="workout workout--running" data-id="1234567890">
-            <div class="main">
-              <img src="images/laura-jones.jpg" class="user-profile-pic" />
-              <h2 class="workout__title1">Omaha</h2>
-              <h2 class="workout__title1">New York</h2>
-            </div>
-            <div class="workout__details">
-              <span class="workout__value">1200</span>
-              <span class="workout__unit">Miles</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">⏱</span>
-              <span class="workout__value">24</span>
-              <span class="workout__unit">Hours</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">⚡️</span>
-              <span class="workout__value">60</span>
-              <span class="workout__unit">mph</span>
-            </div>
-            <div class="workout__details">
-              <span class="workout__icon">$</span>
-              <span class="workout__value">300</span>
-            </div>
-          </li>
-        </ul>
+        <ul class="rides"></ul>
       </div>
       <div id="map"></div>
     </div>
@@ -102,5 +82,59 @@
         />
       </svg>
     </button>
+    <div class="overlay hidden"></div>
+    <form id="add-ride-form" class="hidden">
+      <button class="form-return-btn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="return-icon"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <h2 class="addride-form-title">ADD RIDE</h2>
+      <div>
+        <input
+          type="text"
+          id="startPoint"
+          class="add-ride-form-inputfield"
+          placeholder="From"
+        />
+        <img src="images/road-line.svg" alt="road icon" class="road-icon" />
+        <input
+          type="text"
+          id="endPoint"
+          class="add-ride-form-inputfield"
+          placeholder="To"
+        />
+      </div>
+      <input
+        type="number"
+        id="miles"
+        class="add-ride-form-inputfield"
+        placeholder="Total Miles"
+      />
+      <input
+        type="number"
+        id="seats"
+        class="add-ride-form-inputfield"
+        placeholder="Seats Avaiable"
+      />
+      <input
+        type="number"
+        id="amount"
+        class="add-ride-form-inputfield"
+        placeholder="$ 0"
+      />
+      <button class="add-form-btn">ADD</button>
+    </form>
   </body>
 </html>
