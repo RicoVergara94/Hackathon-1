@@ -23,11 +23,12 @@ class App {
 
   constructor() {
     //get positon
-    this._getPosition();
+    this._getPositionLive();
+
     this.#map = null; // Initialize the map variable
 
     searchForm.addEventListener('submit', e => {
-      // e.preventDefault(); // Prevent the form from submitting normally
+      e.preventDefault(); // Prevent the form from submitting normally
       const query = searchBar.value; // Get the value from the search bar
       console.log('Search query:', query);
       this._geocodeCity(query); // Arrow function preserves the context of `this`
@@ -63,6 +64,28 @@ class App {
       );
 
       addRideForm.classList.add('hidden');
+
+      const _getCord = () => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              const lan = position.coords.latitude;
+              const lon = position.coords.longitude;
+              this._renderWorkoutMarker(lan, lon);
+            },
+            function () {
+              alert('Could not get your position');
+            }
+          );
+        }
+      };
+
+      _getCord();
+
+      // Call the async function
+
+      // const { latitude, longitude } = this._getPositionLive();
+      // console.log(latitude, longitude);
     });
 
     // Get data from local storage
@@ -81,14 +104,15 @@ class App {
     });
   }
 
-  _getPosition() {
+  _getPositionLive() {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
         position => {
           const lan = position.coords.latitude;
           const lon = position.coords.longitude;
-          console.log(lan, lon); // For testing, you can see the coords in the console
+          // console.log(lan, lon); // For testing, you can see the coords in the cons
           this._loadMap(lan, lon);
+          return lan, lon;
         },
         function () {
           alert('Could not get your position');
@@ -133,16 +157,14 @@ class App {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
 
-    // Handling clicks on map
-    this.#map.on('click', this._showForm.bind(this));
-
-    this.#workouts.forEach(work => {
-      this._renderWorkoutMarker(work);
-    });
+    // this.#workouts.forEach(work => {
+    // this._renderWorkoutMarker(work);
+    // });
   }
 
   _renderWorkoutMarker(lat, lon) {
-    const coords = L.marker(coords)
+    const positions = [lat, lon];
+    const coords = L.marker(positions)
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -150,12 +172,10 @@ class App {
           minWidth: 100,
           autoClose: false,
           closeOnClick: false,
-          className: `${workout.type}-popup`,
+          // className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent(
-        `${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.description}`
-      )
+      .setPopupContent(`${'Hello World'}`)
       .openPopup();
   }
 
@@ -167,32 +187,33 @@ class App {
     amountValue
   ) {
     let html = `
-  <li class="workout workout--running" data-id="1234567890">
-    <div class="main">
-      <img src="images/laura-jones.jpg" class="user-profile-pic" />
-      <h2 class="workout__title1">${startPointValue}</h2>
-      <h2 class="workout__title1">${endPointValue}</h2>
-    </div>
-    <div class="workout__details">
-      <span class="workout__value">${milesValue}</span>
-      <span class="workout__unit">Miles</span>
-    </div>
-    <div class="workout__details">
-      <span class="workout__icon">&</span>
-      <span class="workout__value">${seatsValue}</span>
-      <span class="workout__unit">seats</span>
-    </div>
-    <div class="workout__details">
-      <span class="workout__icon">⚡️</span>
-      <span class="workout__value">60</span>
-      <span class="workout__unit">mph</span>
-    </div>
-    <div class="workout__details">
-      <span class="workout__icon">$</span>
-      <span class="workout__value">${amountValue}</span>
-    </div>
-  </li>
+<li class="workout workout--running" data-id="1234567890">
+  <div class="main">
+    <img src="images/laura-jones.jpg" class="user-profile-pic" />
+    <h2 class="workout__title1">${startPointValue}</h2>
+    <h2 class="workout__title2">${endPointValue}</h2>
+  </div>
+  <div class="workout__details">
+    <span class="workout__value">${milesValue}</span>
+    <span class="workout__unit">Miles</span>
+  </div>
+  <div class="workout__details">
+    <span class="workout__icon">&</span>
+    <span class="workout__value">${seatsValue}</span>
+    <span class="workout__unit">seats</span>
+  </div>
+  <div class="workout__details">
+    <span class="workout__icon">⚡️</span>
+    <span class="workout__value">60</span>
+    <span class="workout__unit">mph</span>
+  </div>
+  <div class="workout__details">
+    <span class="workout__icon">$</span>
+    <span class="workout__value">${amountValue}</span>
+  </div>
+</li>
 `;
+
     rides.insertAdjacentHTML('afterbegin', html);
   }
 

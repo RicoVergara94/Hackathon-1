@@ -89,10 +89,10 @@ a:visited {
   border-left: 5px solid var(--color-brand--1);
 }
 
-.workout__title {
+.workout__title1 {
   font-size: 1.7rem;
   font-weight: 600;
-  grid-column: 1 / -1;
+  grid-column: 2;
 }
 
 .workout__details {
