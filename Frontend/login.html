@@ -37,13 +37,23 @@
         <div id="login-form" class="form">
           <div class="form__row">
             <label class="form__label">Username</label>
-            <input id="username" class="form__input" type="text" placeholder="Enter username" />
+            <input
+              id="username"
+              class="form__input"
+              type="text"
+              placeholder="Enter username"
+            />
           </div>
           <div class="form__row">
             <label class="form__label">Password</label>
-            <input id="password" class="form__input" type="password" placeholder="Enter password" />
+            <input
+              id="password"
+              class="form__input"
+              type="password"
+              placeholder="Enter password"
+            />
           </div>
-          <button class="form__btn" onclick="login()">Login</button>
+          <button class="form__btn" onclick="handleLogin(event)">Login</button>
           <p>
             Don't have an account?
             <span onclick="toggleForm('register')">Create one</span>
@@ -53,15 +63,30 @@
         <div id="register-form" class="form hidden">
           <div class="form__row">
             <label class="form__label">Username</label>
-            <input id="register-username" class="form__input" type="text" placeholder="Enter username" />
+            <input
+              id="register-username"
+              class="form__input"
+              type="text"
+              placeholder="Enter username"
+            />
           </div>
           <div class="form__row">
             <label class="form__label">Password</label>
-            <input id="register-password" class="form__input" type="password" placeholder="Enter password" />
+            <input
+              id="register-password"
+              class="form__input"
+              type="password"
+              placeholder="Enter password"
+            />
           </div>
           <div class="form__row">
             <label class="form__label">Confirm Password</label>
-            <input id="confirm-password" class="form__input" type="password" placeholder="Confirm password" />
+            <input
+              id="confirm-password"
+              class="form__input"
+              type="password"
+              placeholder="Confirm password"
+            />
           </div>
           <button class="form__btn" onclick="register()">Register</button>
           <p>

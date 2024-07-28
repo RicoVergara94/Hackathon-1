@@ -1,31 +1,5 @@
 'use strict';
 
-async function getUserInfo(username) {
-  try {
-    const port = 3000;
-    const response = await fetch(
-      `http://localhost:${port}/api/user/${username}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok: ' + response.statusText);
-    }
-
-    const userInfo = await response.json();
-    console.log(userInfo);
-
-    displayUserInfo(userInfo);
-  } catch (error) {
-    console.error('Error fetching user info:', error);
-  }
-}
-
 function displayUserInfo(userInfo) {
   document.getElementById('user-name').innerText = userInfo.name;
 }
@@ -170,4 +144,41 @@ function toggleForm(formType) {
 function register() {
   // Handle registration logic here
   alert('Registering...');
+}
+
+async function handleLogin(username) {
+  try {
+    // event.preventDefault();
+    const port = 3000;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const user = {
+      username,
+      password,
+    };
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    };
+    const response = await fetch(
+      `http://localhost:${port}/api/auth/login`,
+      options
+    );
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok: ' + response.statusText);
+    }
+    console.log('here we are');
+
+    // const userInfo = await response.json();
+    // console.log(userInfo);
+
+    // displayUserInfo(userInfo);
+    window.location.href = 'map.html';
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+  }
 }
