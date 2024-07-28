@@ -221,6 +221,14 @@ async function handleLogin(username) {
     // console.log(userInfo);
 
     // displayUserInfo(userInfo);
+
+    // Store the user ID in local storage or session storage
+
+    const data = await response.json();
+    localStorage.setItem('userId', data.userId);
+    console.log(`this is user_id ${data.userId}`);
+    alert('Login successful');
+
     window.location.href = 'map.html';
   } catch (error) {
     console.error('Error fetching user info:', error);

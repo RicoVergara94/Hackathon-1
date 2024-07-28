@@ -100,14 +100,14 @@
       <div>
         <input
           type="text"
-          id="startPoint"
+          id="startingPoint"
           class="add-ride-form-inputfield"
           placeholder="From"
         />
         <img src="images/road-line.svg" alt="road icon" class="road-icon" />
         <input
           type="text"
-          id="endPoint"
+          id="destination"
           class="add-ride-form-inputfield"
           placeholder="To"
         />
@@ -119,14 +119,20 @@
         placeholder="Total Miles"
       />
       <input
+        type="datetime-local"
+        id="departureTime"
+        name="departureTime"
+        placeholder="Departure Time"
+      />
+      <input
         type="number"
-        id="seats"
+        id="availableSeats"
         class="add-ride-form-inputfield"
         placeholder="Seats Avaiable"
       />
       <input
         type="number"
-        id="amount"
+        id="payment"
         class="add-ride-form-inputfield"
         placeholder="$ 0"
       />
@@ -135,60 +141,41 @@
 
     <script>
       document
-        .getElementById('rideForm')
-        .addEventListener('submit', async function (event) {
-          event.preventDefault();
+        .getElementById('ride-form')
+        .addEventListener('submit', async e => {
+          e.preventDefault();
+
+          const driverId = localStorage.getItem('userId');
+          if (!driverId) {
+            alert('User not logged in');
+            return;
+          }
+
+          console.log('here bubba');
 
           const ride = {
-            startLocation: {
-              coordinates: [
-                parseFloat(document.getElementById('startLat').value),
-                parseFloat(document.getElementById('startLon').value),
-              ],
-            },
-            endLocation: {
-              coordinates: [
-                parseFloat(document.getElementById('endLat').value),
-                parseFloat(document.getElementById('endLon').value),
-              ],
-            },
-            totalMiles: parseFloat(document.getElementById('totalMiles').value),
-            seatsAvailable: parseInt(
-              document.getElementById('seatsAvailable').value,
-              10
-            ),
-            payment: parseFloat(document.getElementById('payment').value),
-            riderId: document.getElementById('riderId').value,
+            driver: driverId,
+            startingPoint: document.getElementById('startingPoint').value,
+            destination: document.getElementById('destination').value,
+            departureTime: document.getElementById('departureTime').value,
+            availableSeats: document.getElementById('availableSeats').value,
+            payment: document.getElementById('payment').value,
           };
 
-          const options = {
+          const response = await fetch('http://localhost:3000/api/rides', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(ride),
-          };
+          });
 
-          fetch('http://localhost:3000/api/rides/create', options)
-            .then(response => {
-              if (!response.ok) {
-                return response.text().then(text => {
-                  throw new Error(
-                    `Network response was not ok: ${response.status} - ${text}`
-                  );
-                });
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log('Response:', data);
-            })
-            .catch(error => {
-              console.error(
-                'There was a problem with the fetch operation:',
-                error.message
-              );
-            });
+          const data = await response.json();
+          if (response.ok) {
+            console.log('Ride posted successfully:', data);
+          } else {
+            console.error('Failed to post ride:', data.message);
+          }
         });
     </script>
   </body>

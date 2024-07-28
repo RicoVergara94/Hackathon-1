@@ -44,23 +44,55 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/rides', async (req, res) => {
-  const { latitude, longitude, radius } = req.query;
-
   try {
-    const rides = await Ride.find({
-      startLocation: {
-        $geoWithin: {
-          $centerSphere: [[longitude, latitude], radius / 3963.2], // radius in miles, convert to radians
-        },
-      },
-    }).populate('rider', 'username email name'); // populate rider's profile details
-
-    res.json(rides);
+    const { startingPoint, destination } = req.query;
+    const rides = await Ride.find({ startingPoint, destination });
+    res.status(200).json(rides);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 });
 
+app.post('/api/rides', async (req, res) => {
+  try {
+    const {
+      driver,
+      startingPoint,
+      destination,
+      departureTime,
+      availableSeats,
+      payment,
+    } = req.body;
+    const ride = new Ride({
+      driver,
+      startingPoint,
+      destination,
+      departureTime,
+      availableSeats,
+      payment,
+    });
+    await ride.save();
+    res.status(201).json(ride);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/api/rides/:id/request', async (req, res) => {
+  try {
+    const ride = await Ride.findById(req.params.id);
+    if (ride.availableSeats > 0) {
+      ride.passengers.push(req.body.userId);
+      ride.availableSeats -= 1;
+      await ride.save();
+      res.status(200).json(ride);
+    } else {
+      res.status(400).json({ message: 'No available seats' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 // const createUser = async (username, password) => {
 //   try {
 //     const user = new User({ username, password });
