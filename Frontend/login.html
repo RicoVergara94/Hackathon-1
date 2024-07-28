@@ -19,6 +19,12 @@
       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
       crossorigin=""
     />
+    <style>
+      #passwordWarning {
+        display: none;
+        color: red;
+      }
+    </style>
     <script
       defer
       src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
@@ -88,7 +94,8 @@
               placeholder="Confirm password"
             />
           </div>
-          <button class="form__btn" onclick="register()">Register</button>
+          <div id="passwordWarning">passwords do not match</div>
+          <button class="form__btn" onclick="registerUser()">Register</button>
           <p>
             Already have an account?
             <span onclick="toggleForm('login')">Login</span>

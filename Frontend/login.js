@@ -25,6 +25,52 @@ document
     // Call register API
   });
 
+async function registerUser() {
+  try {
+    // event.preventDefault();
+    const port = 3000;
+    const username = document.getElementById('register-username').value;
+    const password = document.getElementById('register-password').value;
+    const password2 = document.getElementById('confirm-password').value;
+    const warningDiv = document.getElementById('passwordWarning');
+
+    if (password !== password2) {
+      warningDiv.style.display = 'block';
+    } else {
+      warningDiv.style.display = 'none';
+    }
+    const user = {
+      username,
+      password,
+    };
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    };
+
+    console.log(username);
+    console.log(password);
+    const response = await fetch(
+      `http://localhost:${port}/api/auth/register`,
+      options
+    );
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok: ' + response.statusText);
+    }
+    // const userInfo = await response.json();
+    // console.log(userInfo);
+
+    // displayUserInfo(userInfo);
+    window.location.href = 'login.html';
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+  }
+}
+
 document.getElementById('show-register').addEventListener('click', () => {
   document.getElementById('login-modal').classList.add('hidden');
   document.getElementById('register-modal').classList.remove('hidden');
@@ -171,8 +217,6 @@ async function handleLogin(username) {
     if (!response.ok) {
       throw new Error('Network response was not ok: ' + response.statusText);
     }
-    console.log('here we are');
-
     // const userInfo = await response.json();
     // console.log(userInfo);
 
