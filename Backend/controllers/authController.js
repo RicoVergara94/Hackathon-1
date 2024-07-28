@@ -7,6 +7,8 @@ exports.register = async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    console.log(`username: ${username} password: ${password}`);
+
     // Check is user already exists
     const existingUser = await User.findOne({ username });
     if (existingUser) {
@@ -14,15 +16,16 @@ exports.register = async (req, res) => {
     }
 
     // Hash the password
-    const hashedPasswrods = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    console.log(hashedPassword);
 
     // Create a new user
-    const newUser = new User({ usermame, password: hashedPasswrod });
+    const newUser = new User({ username, password: hashedPassword });
     await newUser.save();
 
     res.status(201).json({ message: 'User registered succesfully' });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: `Server error` });
   }
 };
 
@@ -34,13 +37,17 @@ exports.login = async (req, res) => {
     // Find user by username
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res
+        .status(400)
+        .json({ message: 'Invalid credentials ${username}' });
     }
 
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      return res.status(400).json({
+        message: `Invalid credentials ${username} ${password} ${user.password}`,
+      });
     }
 
     // Create JWT token
