@@ -93,42 +93,6 @@ app.post('/api/rides/:id/request', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-// const createUser = async (username, password) => {
-//   try {
-//     const user = new User({ username, password });
-//     await user.save();
-//     console.log('User created:', user);
-//   } catch (error) {
-//     console.error('Error creating user:', error);
-//   }
-// };
-
-// createUser('Oscar Vergara', 'oscarpassword');
-
-// app.post('/api/auth/login', async (req, res) => {
-//   const { username, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ username });
-//     if (!user) {
-//       return res.status(400).json({ message: 'Invalid credentials' });
-//     }
-
-//     console.log('Plain password:', password);
-//     console.log('Hashed password from DB:', user.password);
-
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) {
-//       return res.status(400).json({
-//         message: `Invalid credentials ${username} ${password} ${user.password}`,
-//       });
-//     }
-
-//     res.json({ message: 'Login successful' });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// });
 
 app.listen(port, () => {
   console.log('server is running on http://localhost:${port}');

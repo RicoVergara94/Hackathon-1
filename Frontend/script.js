@@ -175,7 +175,7 @@ class App {
           // className: `${workout.type}-popup`,
         })
       )
-      .setPopupContent(`${'Hello World'}`)
+      .setPopupContent(`${'Current Location'}`)
       .openPopup();
   }
 
