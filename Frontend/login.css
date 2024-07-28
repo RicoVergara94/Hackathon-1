@@ -1,0 +1,123 @@
+:root {
+  --color-brand--1: #a67c00; /* A deep gold shade */
+  --color-brand--2: #005f56; /* A sophisticated teal green */
+  --color-dark--1: #1c1c1c; /* Almost black */
+  --color-dark--2: #333333; /* Dark grey */
+  --color-light--1: #f5f5f5; /* Off-white */
+  --color-light--2: #d9d9d9; /* Light grey */
+  --color-light--3: #c0c0c0; /* Soft silver */
+  --form-bg: #2e2e2e;
+  --button-bg: #005f56;
+  --button-hover-bg: #a67c00;
+  --input-bg: #444;
+  --input-text: #ddd;
+  --input-placeholder: #aaa;
+  --logo-height: 5.2rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  color: var(--color-light--2);
+  font-weight: 400;
+  line-height: 1.6;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-dark--1);
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--form-bg);
+  padding: 3rem;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+  height: var(--logo-height);
+  display: block;
+  margin: 0 auto 2rem;
+}
+
+.form {
+  background-color: transparent;
+  padding: 2rem 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.form__row {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-light--2);
+  margin-bottom: 0.5rem;
+}
+
+.form__input {
+  width: 100%;
+  padding: 1rem;
+  font-family: inherit;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  transition: all 0.2s;
+}
+
+.form__input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.form__input:focus {
+  outline: none;
+  background-color: var(--color-light--3);
+}
+
+.form__btn {
+  background-color: var(--button-bg);
+  color: #495057;
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form__btn:hover,
+.form__btn:focus {
+  background-color: var(--button-hover-bg);
+  outline: none;
+}
+
+p {
+  text-align: center;
+  color: var(--color-light--2);
+  margin-top: 1rem;
+}
+
+p span {
+  color: var(--color-brand--1);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
