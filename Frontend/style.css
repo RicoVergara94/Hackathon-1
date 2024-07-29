@@ -286,6 +286,32 @@ a:visited {
   stroke: #000;
 }
 
+.my_location_btn {
+  z-index: 2000;
+}
+
+.my_location_icon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  right: 50px;
+  bottom: 70px;
+  z-index: 1000;
+  fill: #d9480f;
+}
+
+.my_location_btn:hover {
+  fill: #d9480f;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.my_location_icon:hover {
+  fill: #d9480f;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
 /*  */
 
 /* Popup width is defined in JS using options */
@@ -341,7 +367,7 @@ a:visited {
 }
 
 .phone-btn {
-  padding: 10px;
+  padding: 5px;
   border-radius: 25px;
   background-color: #00c46a;
   border: none;
@@ -351,19 +377,19 @@ a:visited {
   background-color: #ffb545;
   cursor: pointer;
   stroke: #fff;
-  fill: #fff;
+  fill: #ffb545;
   transition: background-color 0.3s, transform 0.3s;
   .call-icon {
-    fill: #fff;
+    fill: #ffb545;
     stroke: #fff;
   }
 }
 
 .call-icon {
-  height: 25px;
-  width: 25px;
+  height: 30px;
+  width: 30px;
   stroke: #fff;
-  fill: #fff;
+  fill: #00c46a;
 }
 
 .workout__details {
@@ -457,6 +483,26 @@ a:visited {
 .marker {
   height: 25px;
   width: 25px;
+}
+
+.add-ride-form-inputfield {
+  padding: 1rem;
+  font-family: inherit;
+  font-size: 1.6rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #444;
+  transition: all 0.2s;
+}
+
+.add-ride-form-inputfield::placeholder {
+  color: #000;
+}
+
+.add-ride-form-inputfield:focus {
+  outline: none;
+  background-color: #c0c0c0;
 }
 
 .road-icon {
